@@ -1,0 +1,26 @@
+<form method="post" action="/upload" enctype="multipart/form-data">
+
+<label for="title">Title</label>
+<br>
+<input type="text" id="title" name="title">
+<br>
+
+<label for="by">By</label>
+<br>
+<input type="email" id="email" name="email">
+<br>
+
+<label for="article">Article</label>
+<br>
+<textarea id="article" name="article" cols="30" rows="10"></textarea>
+<br>
+
+<label for="myImage">Image</label>
+<br>
+<input type="file" name="myImage" id="myImage"
+    ngModel #imageFile accept="image/png">
+
+<br>
+<button type="submit">Upload</button>
+
+</form>
