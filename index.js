@@ -41,7 +41,7 @@ if (fs.existsSync(S3_CONFIG)) {
 } else
 	s3Config = {
 		accessKey: process.env.S3_ACCESS_KEY,
-		secretKey: process.env.S3_SECRET_KEY
+		secret: process.env.S3_SECRET_KEY
     }
     
 const PORT = parseInt(process.argv[2] || process.env.APP_PORT || process.env.PORT) || 3000;
