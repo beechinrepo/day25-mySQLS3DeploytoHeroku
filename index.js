@@ -5,7 +5,6 @@ const mysql = require('mysql');
 const aws = require('aws-sdk');
 const uuid = require('uuid');
 const fs = require('fs');
-const { join } = require('path');
 const multer = require('multer');
 const morgan = require('morgan');
 const db = require('./dbutil');
@@ -90,7 +89,7 @@ app.get('/articles',
 )
 
 
-app.post('/upload', fileUpload.single('image'),
+app.post('/article', fileUpload.single('image'),
     (req, resp) => {
         // input type=<not file>
         console.info('req.body: ', req.body);
@@ -114,7 +113,7 @@ app.post('/upload', fileUpload.single('image'),
                             req.body.email, 
                             req.body.article,
                             postDate,
-                            req.file.filename
+                            req.file.filename  // as text
                         ]
                         return (insertNewArticle({connection:status.connection, params: params}));
                     }
@@ -126,7 +125,7 @@ app.post('/upload', fileUpload.single('image'),
                                 if (err)
                                     return reject({connection: status.connection, error: err})
                                 const params = {
-                                    Bucket: 'belloz', Key: `articles/${req.file.filename}`,
+                                    Bucket: 'belloz', Key: `articles/${req.file.filename}`,  // post photo on DO spaces 
                                     Body: imgFile, ContentType: req.file.mimetype,
                                     ContentLength:  req.file.size, ACL: 'public-read'
                                 }
@@ -163,28 +162,11 @@ app.post('/upload', fileUpload.single('image'),
     }
 )
 
-app.use(express.static(join(__dirname, '/public')));
+app.use(express.static(__dirname + '/public'));
 
-pool.getConnection(
-    (err, conn) => {
-        if (err) {
-            console.error('Cannot get database: ', err);
-            return process.exit(0);
-        }
-        conn.ping((err) => {
-            conn.release();
-            if (err) {
-                console.error('Cannot ping database: ', err);
-                return process.exit(0);
-            }
-            app.listen(PORT,
-                () => {
-                    console.info(`Application stared on ${PORT} at ${new Date().toString()}`);
-                }
-            )
-        })
-    }
-)
+app.listen(PORT, () => {
+	console.info(`Application started on port ${PORT} at ${new Date()}`);
+});
 
 
 // const spaces = require('/opt/tmp/abc123_keys');
