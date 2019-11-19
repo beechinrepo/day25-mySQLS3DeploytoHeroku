@@ -10,8 +10,8 @@ const multer = require('multer');
 const morgan = require('morgan');
 const db = require('./dbutil');
 
-const DB_CONFIG = '/Users/Carine/src/tmp/config.js';
-const S3_CONFIG = '/Users/Carine/src/tmp/keys.js';
+const DB_CONFIG = 'C:/Users/Carine/src/tmp/config.js';
+const S3_CONFIG = 'C:/Users/Carine/src/tmp/keys.js';
 
 let dbConfig;
 let s3Config;
@@ -90,7 +90,7 @@ app.get('/articles',
 )
 
 
-app.post('/upload', fileUpload.single('myImage'),
+app.post('/upload', fileUpload.single('image'),
     (req, resp) => {
         // input type=<not file>
         console.info('req.body: ', req.body);
