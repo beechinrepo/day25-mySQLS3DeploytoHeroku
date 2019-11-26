@@ -1,0 +1,21 @@
+language: node_js
+
+node_js:
+- node
+
+dist: bionic
+sudo: required
+
+branches:
+    only:
+    - release
+
+before_script:
+- npm install 
+
+deploy:
+    provider: heroku
+    api_key: $HEROKU_KEY
+    app: your_heroku_app
+    on: 
+        branch: release
