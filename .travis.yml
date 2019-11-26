@@ -15,7 +15,7 @@ before_script:
 
 deploy:
     provider: heroku
-    api_key: $HEROKU_KEY
-    app: your_heroku_app
+    api_key: process.env.HEROKU_KEY
+    app: process.env.your_heroku_app
     on: 
         branch: release
